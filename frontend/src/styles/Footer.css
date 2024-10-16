@@ -1,0 +1,42 @@
+/* Footer.css */
+.footer {
+    background-color: #333; /* Dark background */
+    color: white; /* White text */
+    text-align: center; /* Center text */
+    padding: 20px; /* Padding around the footer */
+    position: relative; /* Allows positioning of elements */
+    bottom: 0; /* Stick to the bottom of the page */
+    width: 100%; /* Full width */
+  }
+  
+  .footer-content {
+    display: flex; /* Flexbox layout */
+    justify-content: space-between; /* Space between items */
+    align-items: center; /* Center items vertically */
+    max-width: 1200px; /* Max width of the content */
+    margin: 0 auto; /* Center the footer content */
+  }
+  
+  .social-icons {
+    display: flex; /* Flexbox for icons */
+    gap: 15px; /* Space between icons */
+  }
+  
+  .social-icons a {
+    color: white; /* Icon color */
+    font-size: 24px; /* Size of the icons */
+    transition: transform 0.2s; /* Smooth transition for hover effects */
+  }
+  
+  .social-icons a:hover {
+    transform: scale(1.2); /* Scale up on hover */
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 600px) {
+    .footer-content {
+      flex-direction: column; /* Stack content on smaller screens */
+      align-items: center; /* Center align items */
+    }
+  }
+  

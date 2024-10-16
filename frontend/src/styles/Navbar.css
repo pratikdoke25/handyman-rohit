@@ -1,0 +1,78 @@
+/* Navbar.css */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 10px; /* Reduced padding for a smaller navbar */
+    background-color: #ffffff; /* White background for professionalism */
+    border-bottom: 1px solid #e0e0e0; /* Subtle border for separation */
+}
+
+.logo {
+    color: #333333; /* Dark color for logo text */
+    font-size: 20px; /* Smaller logo font size */
+    text-decoration: none; /* No underline */
+    font-weight: bold; /* Bold for prominence */
+}
+
+.nav-links {
+    display: flex; /* Flexbox for the links */
+    gap: 15px; /* Reduced space between links */
+}
+
+.nav-link {
+    color: #333333; /* Dark link color for professionalism */
+    text-decoration: none; /* No underline */
+    font-size: 16px; /* Smaller font size for links */
+    padding: 5px 10px; /* Reduced padding for smaller buttons */
+    border-radius: 3px; /* Slightly smaller rounded corners */
+    transition: background-color 0.3s, transform 0.2s; /* Transition for hover effects */
+}
+
+.nav-link:hover {
+    background-color: #f0f0f0; /* Light grey on hover */
+    transform: scale(1.02); /* Slightly scale up on hover */
+}
+
+.nav-link.active {
+    background-color: transparent; /* No background for active link */
+    color: #007BFF; /* Professional color for active link */
+}
+
+.auth-button {
+    color: #007BFF; /* Button text color */
+    font-size: 16px; /* Button font size */
+    padding: 6px 12px; /* Padding for the buttons */
+    border: 1px solid #007BFF; /* Border color */
+    border-radius: 3px; /* Rounded corners */
+    text-decoration: none; /* No underline */
+    transition: background-color 0.3s, color 0.3s; /* Transition for hover effects */
+}
+
+.auth-button:hover {
+    background-color: #007BFF; /* Background color on hover */
+    color: #ffffff; /* Text color on hover */
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+    .navbar {
+        flex-direction: column; /* Stack links on smaller screens */
+        align-items: flex-start; /* Align links to the start */
+    }
+
+    .nav-links {
+        flex-direction: column; /* Stack links vertically */
+        gap: 5px; /* Space between stacked links */
+        display: none; /* Hide links by default */
+        width: 100%; /* Full width for links */
+    }
+
+    .nav-links.show {
+        display: flex; /* Show links when toggled */
+    }
+
+    .toggle-button {
+        display: block; /* Show toggle button on small screens */
+    }
+}

@@ -1,0 +1,54 @@
+/* UserDashboard.css */
+
+.user-dashboard {
+    max-width: 600px; /* Limit the width */
+    margin: 20px auto; /* Center the dashboard */
+    padding: 20px; /* Padding inside the dashboard */
+    border: 1px solid #e0e0e0; /* Border for the dashboard */
+    border-radius: 5px; /* Rounded corners */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Soft shadow */
+}
+
+.search-container {
+    margin-bottom: 20px; /* Space below the search bar */
+}
+
+input[type="text"] {
+    width: 100%; /* Full width */
+    padding: 10px; /* Padding inside the input */
+    border: 1px solid #ccc; /* Border for the input */
+    border-radius: 5px; /* Rounded corners */
+}
+
+.user-profile {
+    display: flex; /* Flexbox for aligning profile icon and info */
+    align-items: center; /* Center vertically */
+    margin-bottom: 20px; /* Space below the profile */
+}
+
+.profile-icon {
+    font-size: 40px; /* Size of the profile icon */
+    margin-right: 15px; /* Space between icon and info */
+}
+
+.user-info h3 {
+    margin: 0; /* Remove margin */
+}
+
+.user-requests {
+    margin-bottom: 20px; /* Space below the requests section */
+}
+
+.change-password-btn, .logout-btn {
+    padding: 10px 15px; /* Padding for buttons */
+    border: none; /* Remove border */
+    border-radius: 5px; /* Rounded corners */
+    background-color: #007BFF; /* Button color */
+    color: white; /* Button text color */
+    cursor: pointer; /* Pointer cursor on hover */
+    margin-right: 10px; /* Space between buttons */
+}
+
+.change-password-btn:hover, .logout-btn:hover {
+    background-color: #0056b3; /* Darker shade on hover */
+}
