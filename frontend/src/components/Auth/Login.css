@@ -1,22 +1,54 @@
 /* Login.css */
 
 .auth-container {
-    width: 300px; /* Adjust as needed */
+    width: 350px; /* Slightly wider for better accessibility */
     margin: 0 auto; /* Center the container */
-    padding: 20px;
+    padding: 30px; /* Increased padding for a spacious look */
     border: 1px solid #e0e0e0; /* Border for the login box */
-    border-radius: 5px; /* Rounded corners */
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Soft shadow */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Slightly darker shadow for better depth */
+    background-color: #fff; /* White background for contrast */
 }
 
 .auth-container h2 {
     text-align: center; /* Center the heading */
+    margin-bottom: 20px; /* Space below the heading */
+    color: #333; /* Darker color for better readability */
+}
+
+.auth-container form {
+    display: flex; /* Use flex for better alignment */
+    flex-direction: column; /* Stack inputs vertically */
+}
+
+.auth-container input,
+.auth-container select {
+    padding: 10px; /* Increased padding for inputs */
+    margin-bottom: 15px; /* Space between inputs */
+    border: 1px solid #ccc; /* Border for inputs */
+    border-radius: 4px; /* Rounded corners */
+    font-size: 16px; /* Slightly larger font for readability */
+}
+
+.auth-container button {
+    padding: 10px; /* Add padding for button */
+    background-color: #007BFF; /* Primary button color */
+    color: white; /* Text color for button */
+    border: none; /* Remove border */
+    border-radius: 4px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+    font-size: 16px; /* Consistent font size */
+    transition: background-color 0.3s; /* Smooth transition for hover effect */
+}
+
+.auth-container button:hover {
+    background-color: #0056b3; /* Darker shade on hover */
 }
 
 .auth-links {
     display: flex;
     justify-content: space-between; /* Space links apart */
-    margin-top: 10px; /* Margin for spacing */
+    margin-top: 15px; /* Margin for spacing */
     font-size: 14px; /* Font size for the links */
 }
 

@@ -1,27 +1,49 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './VendorDashboard.css'; // Optional: Import your CSS file for styling
 
-// Sample data for user requests
-const userRequests = [
-  { id: 1, userName: 'User One', request: 'Request for product information', status: 'Pending' },
-  { id: 2, userName: 'User Two', request: 'Inquiry about delivery', status: 'Completed' },
-  { id: 3, userName: 'User Three', request: 'Feedback on recent order', status: 'In Progress' },
-];
-
 const VendorDashboard = () => {
+  const [userRequests, setUserRequests] = useState([]); // State to hold user requests
+  const [loading, setLoading] = useState(true); // State for loading indicator
+
+  useEffect(() => {
+    // Function to fetch user requests from the backend
+    const fetchUserRequests = async () => {
+      try {
+        // Replace with your API endpoint
+        const response = await fetch('http://localhost:5000/api/forms'); 
+        const data = await response.json();
+        setUserRequests(data); // Update state with fetched data
+      } catch (error) {
+        console.error('Error fetching user requests:', error);
+      } finally {
+        setLoading(false); // Set loading to false after fetching
+      }
+    };
+
+    fetchUserRequests(); // Call the fetch function
+  }, []); // Empty dependency array means this runs once on component mount
+
   return (
     <div>
       <h2>Vendor Dashboard</h2>
       <h3>User Requests</h3>
-      <div className="request-cards-container">
-        {userRequests.map((request) => (
-          <div key={request.id} className="request-card">
-            <h4>{request.userName}</h4>
-            <p>{request.request}</p>
-            <p>Status: <strong>{request.status}</strong></p>
-          </div>
-        ))}
-      </div>
+      {loading ? ( // Show loading message while data is being fetched
+        <p>Loading user requests...</p>
+      ) : (
+        <div className="request-cards-container">
+          {userRequests.length > 0 ? (
+            userRequests.map((request) => (
+              <div key={request._id} className="request-card"> {/* Use unique ID */}
+                <h4>{request.name}</h4> {/* Assuming you have a 'name' field in your request data */}
+                <p>{request.query}</p> {/* Assuming 'query' contains the request description */}
+                <p>Status: <strong>{request.status}</strong></p>
+              </div>
+            ))
+          ) : (
+            <p>No requests found.</p> // Message when no requests are available
+          )}
+        </div>
+      )}
     </div>
   );
 };

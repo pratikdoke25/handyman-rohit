@@ -27,6 +27,10 @@ const UserFormSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  status: {
+    type: String,
+    default: 'Pending', // Default value for status
+  },
 });
 
 module.exports = mongoose.model('UserForm', UserFormSchema);
