@@ -5,7 +5,8 @@ const Register = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [role, setRole] = useState('user');
+  const [mobile, setMobile] = useState('');  // New state for mobile number
+
   const navigate = useNavigate();
 
   const handleRegister = async (e) => {
@@ -17,20 +18,14 @@ const Register = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ name, email, password, role }),
+        body: JSON.stringify({ name, email, password, mobile }),  // Include mobile number in the request body
       });
 
       const data = await response.json();
 
       if (response.ok) {
         alert('Registration successful!');
-        if (role === 'user') {
-          navigate('/user-dashboard');
-        } else if (role === 'admin') {
-          navigate('/admin-dashboard');
-        } else if (role === 'vendor') {
-          navigate('/vendor-dashboard');
-        }
+        navigate('/user-dashboard');
       } else {
         alert(`Registration failed: ${data.message}`);
       }
@@ -65,11 +60,13 @@ const Register = () => {
           onChange={(e) => setPassword(e.target.value)}
           required
         />
-        <select value={role} onChange={(e) => setRole(e.target.value)}>
-          <option value="user">User</option>
-          <option value="vendor">Vendor</option>
-          <option value="admin">Admin</option>
-        </select>
+        <input
+          type="text"
+          placeholder="Mobile Number"  // New input for mobile number
+          value={mobile}
+          onChange={(e) => setMobile(e.target.value)}
+          required
+        />
         <button type="submit">Register</button>
       </form>
     </div>

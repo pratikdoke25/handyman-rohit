@@ -1,95 +1,34 @@
 import React, { useState } from 'react';
+import UserFormPage from './UserFormPage'; // Ensure the path is correct
 
-const UserForm = ({ onUpdate }) => {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [phone, setPhone] = useState('');
-  const [handyman, setHandyman] = useState('painter');
-  const [query, setQuery] = useState('');
-  const [status, setStatus] = useState(''); // To show submission status
+const ParentComponent = () => {
+  const [userData, setUserData] = useState(null);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const formData = { name, email, phone, handyman, query };
-    
-    try {
-      // Send POST request to backend API using fetch
-      const response = await fetch('http://localhost:5000/api/form', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
-
-      if (response.ok) {
-        // Handle success
-        setStatus('Form submitted successfully');
-        
-        // Pass the updated info to the parent component via onUpdate prop
-        onUpdate(formData);
-        
-        // Clear form fields after successful submission
-        setName('');
-        setEmail('');
-        setPhone('');
-        setHandyman('painter');
-        setQuery('');
-        
-        const data = await response.json();
-        console.log('Response from backend:', data);
-      } else {
-        // Handle failure response
-        setStatus('Error submitting the form');
-        console.error('Error submitting form:', response.statusText);
-      }
-    } catch (error) {
-      // Handle error
-      setStatus('Error submitting the form');
-      console.error('Error submitting form:', error);
-    }
+  // This is the onUpdate function that will be passed to UserFormPage
+  const handleUpdate = (formData) => {
+    console.log('Updated form data:', formData);
+    setUserData(formData); // Update state with the form data
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input
-        type="text"
-        placeholder="Name"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-        required
-      />
-      <input
-        type="email"
-        placeholder="Email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        required
-      />
-      <input
-        type="text"
-        placeholder="Phone Number"
-        value={phone}
-        onChange={(e) => setPhone(e.target.value)}
-        required
-      />
-      <select value={handyman} onChange={(e) => setHandyman(e.target.value)}>
-        <option value="painter">Painter</option>
-        <option value="electrician">Electrician</option>
-        {/* Add more options as needed */}
-      </select>
-      <textarea
-        placeholder="Why do you need the handyman?"
-        value={query}
-        onChange={(e) => setQuery(e.target.value)}
-        required
-      />
-      <button type="submit">Submit</button>
+    <div>
+      <h1>User Profile</h1>
+      {/* Pass handleUpdate as onUpdate prop to UserFormPage */}
+      <UserFormPage onUpdate={handleUpdate} /> {/* Ensure this is passed correctly */}
 
-      {/* Display submission status */}
-      {status && <p>{status}</p>}
-    </form>
+      {/* Display submitted data */}
+      {userData && (
+        <div>
+          <h2>Updated Information:</h2>
+          <p>Name: {userData.name}</p>
+          <p>Email: {userData.email}</p>
+          <p>Phone: {userData.phone}</p>
+          <p>Handyman: {userData.handyman}</p>
+          <p>Query: {userData.query}</p>
+        </div>
+      )}
+    </div>
   );
 };
 
-export default UserForm;
+export default ParentComponent;

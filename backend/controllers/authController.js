@@ -6,7 +6,7 @@ exports.login = async (req, res) => {
   const { email, password, role } = req.body;
 
   try {
-    const user = await User.findOne({ email, role });
+    const user = await User.findOne({ email });
     if (!user) {
       return res.status(400).json({ message: 'User not found or incorrect role.' });
     }
@@ -23,7 +23,7 @@ exports.login = async (req, res) => {
 
     return res.json({
       token,
-      user: { id: user._id, name: user.name, email: user.email, role: user.role },
+      user: { id: user._id, name: user.name, email: user.email, mobile: user.mobile }, // Include mobile number
     });
   } catch (error) {
     console.error('Login error:', error);
@@ -31,8 +31,9 @@ exports.login = async (req, res) => {
   }
 };
 
+// Controller for user registration
 exports.register = async (req, res) => {
-  const { name, email, password, role } = req.body;
+  const { name, email, password, mobile, role } = req.body; // Include mobile in the request body
 
   try {
     // Check if user already exists
@@ -46,7 +47,7 @@ exports.register = async (req, res) => {
       name,
       email,
       password, // Store the password without hashing
-      role,
+      mobile,   // Save mobile number
     });
 
     await newUser.save();
@@ -57,7 +58,7 @@ exports.register = async (req, res) => {
   }
 };
 
-//get profile
+// Controller to get user profile
 exports.getProfile = async (req, res) => {
   const { userId } = req.params; // Assuming user ID is passed as a URL parameter
 
@@ -72,7 +73,7 @@ exports.getProfile = async (req, res) => {
       id: user._id,
       name: user.name,
       email: user.email,
-      role: user.role,
+      mobile: user.mobile, // Include mobile number in the response
       // Include other fields you want to display
     });
   } catch (error) {

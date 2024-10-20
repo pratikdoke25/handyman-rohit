@@ -1,0 +1,70 @@
+/* Profile.css */
+
+.profile {
+    padding: 20px;
+    max-width: 600px;
+    margin: 0 auto;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  h2 {
+    text-align: center;
+    color: #333;
+  }
+  
+  .user-profile {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .profile-icon {
+    font-size: 40px;
+    margin-right: 15px;
+  }
+  
+  .user-info {
+    flex-grow: 1;
+  }
+  
+  .user-info h3 {
+    margin: 0;
+    color: #007bff; /* Blue color for user name */
+  }
+  
+  .user-info p {
+    margin: 5px 0;
+    color: #555; /* Darker grey for text */
+  }
+  
+  .user-requests {
+    margin-bottom: 20px;
+  }
+  
+  .user-requests h3 {
+    margin: 0;
+    color: #333;
+  }
+  
+  .user-requests ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .user-requests li {
+    padding: 5px 0;
+    border-bottom: 1px solid #ddd;
+    color: #555; /* Darker grey for requests */
+  }
+  
+  .user-requests li:last-child {
+    border-bottom: none; /* Remove border from last item */
+  }
+  
+  /* Add your UserForm styles here if needed */
+  

@@ -4,8 +4,9 @@ const cors = require('cors');
 require('dotenv').config(); // Import dotenv to load environment variables
 const authRoutes = require('./routes/authRoutes');
 const userFormRoutes = require('./routes/userFormRoutes');
-
+const vendorRoutes = require('./routes/vendorRoutes');
 const app = express();
+const userRoutes = require('./routes/userRoutes'); // Import user routes
 
 // Middleware to parse JSON
 app.use(express.json());
@@ -27,7 +28,8 @@ mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
 // Routes
 app.use('/api/auth', authRoutes);
 app.use('/api', userFormRoutes);
-
+app.use('/api', vendorRoutes);
+app.use('/api', userRoutes); // Use the user routes with the '/api' prefix
 // Start server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
