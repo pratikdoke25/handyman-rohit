@@ -33,11 +33,28 @@ const AdminDashboard = () => {
     }, []);
 
     // Function to toggle block/unblock user status
-    const toggleUserStatus = (id) => {
-        const updatedUsers = users.map(user => 
-            user._id === id ? { ...user, status: user.status === 'active' ? 'blocked' : 'active' } : user
-        );
-        setUsers(updatedUsers);
+    const toggleUserStatus = async (id) => {
+        try {
+            const response = await fetch(`http://localhost:5000/api/users/${id}/status`, {
+                method: 'PATCH', // Use PATCH for updating a resource
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to update user status');
+            }
+
+            const updatedUser = await response.json();
+            // Update local state to reflect the new status
+            const updatedUsers = users.map(user =>
+                user._id === updatedUser.data._id ? updatedUser.data : user
+            );
+            setUsers(updatedUsers);
+        } catch (err) {
+            setError(err.message);
+        }
     };
 
     // Loading state

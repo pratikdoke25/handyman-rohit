@@ -13,7 +13,7 @@ const Navbar = ({ isLoggedIn, onLogout, userRole }) => {
             <Link className="nav-link" to="/profile">Profile</Link>
             <Link className="nav-link" to="/user-requests">User Requests</Link>
             <Link className="nav-link" to="/user-form">User Form</Link>
-
+          
             {/* Show role-specific dashboard links */}
             {userRole === 'vendor' && (
               <Link className="nav-link" to="/vendor-dashboard">Vendor Dashboard</Link>

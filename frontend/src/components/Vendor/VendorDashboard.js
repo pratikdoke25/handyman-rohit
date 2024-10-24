@@ -1,81 +1,84 @@
 import React, { useEffect, useState } from 'react';
-import './VendorDashboard.css'; // Optional: Import your CSS file for styling
+
+const fetchVendorRequests = async (token) => {
+  try {
+    const response = await fetch('http://localhost:5000/api/users', {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to fetch vendor requests');
+    }
+
+    const data = await response.json(); // Get the response data
+    console.log('Fetched data:', data); // Log the response data for debugging
+
+    return data; // Return the data directly
+  } catch (error) {
+    console.error('Error fetching vendor requests:', error);
+    return null;
+  }
+};
 
 const VendorDashboard = () => {
-  const [userRequests, setUserRequests] = useState([]); // State to hold user requests
-  const [loading, setLoading] = useState(true); // State for loading indicator
-  const [searchTerm, setSearchTerm] = useState(''); // State for search term
+  const [requests, setRequests] = useState([]);
+  const [error, setError] = useState('');
 
+  const vendorRole = localStorage.getItem('vendorRole');
+  const vendorToken = localStorage.getItem('vendorToken');
+  const vendorEmail = localStorage.getItem('vendorEmail');
+    console.log(vendorRole);
   useEffect(() => {
-    // Function to fetch user requests from the backend
-    const fetchUserRequests = async () => {
-      try {
-        // Replace with your API endpoint
-        const response = await fetch('http://localhost:5000/api/forms'); 
-        const data = await response.json();
-        setUserRequests(data); // Update state with fetched data
-      } catch (error) {
-        console.error('Error fetching user requests:', error);
-      } finally {
-        setLoading(false); // Set loading to false after fetching
+    const getRequests = async () => {
+      if (vendorToken) {
+        const data = await fetchVendorRequests(vendorToken);
+
+        // Check if the data is an array or handle different formats
+        if (Array.isArray(data)) {
+          setRequests(data);
+        } else if (data && data.requests) {
+          // Assuming data has a structure like { requests: [...] }
+          setRequests(data.requests);
+        } else {
+          setError('Invalid data format received');
+        }
+      } else {
+        setError('No vendor token found');
       }
     };
 
-    fetchUserRequests(); // Call the fetch function
-  }, []); // Empty dependency array means this runs once on component mount
+    getRequests();
+  }, [vendorToken]);
 
-  // Function to handle scraping data
-  const handleScrapData = async () => {
-    console.log("Scraping data..."); // Add your scraping logic here
-    // You can add an API call to initiate data scraping if needed
-    // Example: await fetch('http://localhost:5000/api/scrap');
-  };
+  if (error) {
+    return <div>{error}</div>;
+  }
 
-  // Filter user requests based on search term
-  const filteredRequests = userRequests.filter(request =>
-    request.name.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  if (requests.length === 0) {
+    return <div>No requests available for your role.</div>;
+  }
 
   return (
-    <div>
+    <div className="dashboard">
       <h2>Vendor Dashboard</h2>
-      
-      {/* Search Bar */}
-      <div className="search-container">
-        <input
-          type="text"
-          placeholder="Search Requests"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-        />
-        <button className="search-icon" onClick={() => setSearchTerm('')}>
-          🔍
-        </button>
-      </div>
+      <p><strong>Email:</strong> {vendorEmail}</p>
+      <p><strong>Role:</strong> {vendorRole}</p>
 
-      {/* Scrap Data Button */}
-      <button className="scrap-button" onClick={handleScrapData}>
-        Scrap Data
-      </button>
-
-      <h3>User Requests</h3>
-      {loading ? ( // Show loading message while data is being fetched
-        <p>Loading user requests...</p>
-      ) : (
-        <div className="request-cards-container">
-          {filteredRequests.length > 0 ? (
-            filteredRequests.map((request) => (
-              <div key={request._id} className="request-card"> {/* Use unique ID */}
-                <h4>{request.name}</h4> {/* Assuming you have a 'name' field in your request data */}
-                <p>{request.query}</p> {/* Assuming 'query' contains the request description */}
-                <p>Status: <strong>{request.status}</strong></p>
-              </div>
-            ))
-          ) : (
-            <p>No requests found.</p> // Message when no requests are available
-          )}
-        </div>
-      )}
+      {requests
+        .filter((req) => req.handyman === vendorRole)
+        .map((request) => (
+          <div key={request._id}>
+            <h3>Request Details</h3>
+            <p><strong>Name:</strong> {request.name}</p>
+            <p><strong>Email:</strong> {request.email}</p>
+            <p><strong>Phone:</strong> {request.phone}</p>
+            <p><strong>Handyman:</strong> {request.handyman}</p>
+            <p><strong>Query:</strong> {request.query}</p>
+            <p><strong>Submitted At:</strong> {new Date(request.submittedAt).toLocaleString()}</p>
+          </div>
+        ))}
     </div>
   );
 };

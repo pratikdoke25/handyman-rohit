@@ -14,7 +14,7 @@ const UserFormSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  handyman: {
+  role: {
     type: String,
     enum: ['painter', 'electrician'], // Add more options if needed
     required: true,

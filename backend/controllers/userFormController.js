@@ -53,7 +53,7 @@ const UserForm = require('../models/UserForm');
 // Create a new form entry
 exports.createUserForm = async (req, res) => {
     try {
-      const { name, email, phone, handyman, query } = req.body;
+      const { name, email, phone, role, query } = req.body;
   
       // Create new form entry
       const newUserForm = new UserForm({

@@ -13,9 +13,9 @@ app.use(express.json());
 
 // Enable CORS for frontend (localhost:3000)
 app.use(cors({
-  origin: 'http://localhost:3000', // Your frontend origin
-  methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allowed methods
-  credentials: true, // Allow credentials (cookies, etc.)
+  origin: 'http://localhost:3000', // Allow requests only from this origin
+  methods: ['GET', 'POST', 'PATCH', 'DELETE'], // Specify allowed methods
+  allowedHeaders: ['Content-Type', 'Authorization'] // Specify allowed headers
 }));
 
 // MongoDB connection

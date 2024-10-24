@@ -6,7 +6,7 @@ const userSchema = new mongoose.Schema({
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   mobile: { type: String, required: true, unique: true }, // Added mobile field
-  role: { type: String, default: 'user' }
+  role: { type: String, default: 'user' },
 });
 
 // Create and export the User model

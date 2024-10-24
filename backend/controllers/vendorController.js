@@ -1,5 +1,6 @@
 const Vendor = require('../models/vendor');
 const jwt = require('jsonwebtoken');
+// const Request = require('../models/request'); // Import your Request model
 
 // Register Vendor
 exports.registerVendor = async (req, res) => {
@@ -14,6 +15,7 @@ exports.registerVendor = async (req, res) => {
         await vendor.save();
         res.status(201).json({ message: 'Vendor registered successfully' });
     } catch (error) {
+        console.error(error); // Log the error for debugging
         res.status(500).json({ message: 'Server error' });
     }
 };
@@ -32,9 +34,38 @@ exports.loginVendor = async (req, res) => {
             return res.status(400).json({ message: 'Invalid credentials' });
         }
 
-        const token = jwt.sign({ vendorId: vendor._id }, 'secretkey', { expiresIn: '1h' });
-        res.status(200).json({ token, vendor });
+        // Include role in the token payload
+        const token = jwt.sign({ vendorId: vendor._id, role: vendor.role }, 'secretkey', { expiresIn: '1h' });
+
+        // Send back token and vendor details (including role)
+        res.status(200).json({
+            token,
+            vendor: {
+                email: vendor.email,
+                role: vendor.role,
+            },
+        });
     } catch (error) {
+        console.error(error); // Log the error for debugging
         res.status(500).json({ message: 'Server error' });
+    }
+};
+
+// Fetch vendor-specific requests
+exports.getVendorRequests = async (req, res) => {
+    // Check if req.vendor is defined
+    if (!req.vendor) {
+        return res.status(401).json({ message: 'Vendor not authenticated' });
+    }
+
+    const { role } = req.vendor; // Get vendor's role from the token payload
+
+    try {
+        // Fetch requests associated with the vendor's role
+        const requests = await Request.find({ handyman: role }); // Adjust based on your schema
+        res.status(200).json(requests);
+    } catch (error) {
+        console.error(error); // Log the error for debugging
+        res.status(500).json({ message: 'Server error fetching vendor requests' });
     }
 };

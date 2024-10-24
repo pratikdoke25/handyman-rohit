@@ -8,4 +8,7 @@ router.post('/vendor-register', vendorController.registerVendor);
 // Login Route
 router.post('/vendor-login', vendorController.loginVendor);
 
+// Get Vendor-Specific Requests
+router.get('/vendor-requests', vendorController.getVendorRequests);
+
 module.exports = router;

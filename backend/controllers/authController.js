@@ -81,3 +81,5 @@ exports.getProfile = async (req, res) => {
     return res.status(500).json({ message: 'Server error. Please try again later.' });
   }
 };
+
+// Controller to toggle user status (block/unblock)
